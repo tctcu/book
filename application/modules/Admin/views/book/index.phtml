@@ -68,14 +68,19 @@
                             <td ><?php echo $val['author']?></td>
                             <td ><?php echo $val['press']?></td>
                             <td ><?php echo $val['version']?></td>
-                            <td ><?php if( $val['status']==1){?>
+                            <td ><?php if( $val['status']==1){ ?>
                                     <a class="btn btn-warning btn-xs confirm" href="/admin/book/checkStatus/?id=<?php echo $val['id']?>&status=2"><i class="glyphicon glyphicon-arrow-down"></i>下架</a>
                                 <?php }elseif($val['status']==2){ ?>
                                     <a class="btn btn-info btn-xs confirm" href="/admin/book/checkStatus/?id=<?php echo $val['id']?>&status=1"><i class="glyphicon glyphicon-arrow-up"></i>上架</a>
-                                <?php }else{echo '已借出';} ?>
+                                <?php }else{ ?>
+                                    <a class="btn btn-info btn-xs confirm" href="/admin/book/borrowList/?bid=<?php echo $val['id']?>">已借出</a>
+                                <?php } ?>
                             </td>
                             <td align="center">
                                 <a class="btn btn-success btn-xs confirm" href="/admin/book/create/?id=<?php echo $val['id']?>">编辑</a>
+                                <?php if( $val['status']==1 || $val['status']==2){ ?>
+                                    <a class="btn btn-danger btn-xs confirm" onclick="delAlert('/admin/book/delete/?id=<?php echo $val['id']?>')">删除</a>
+                                <?php } ?>
                             </td>
                         </tr>
                     <?php } ?>
