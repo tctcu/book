@@ -68,6 +68,46 @@ class IndexController extends BaseController
         $this->redirect('/');
         return FALSE;
     }
+
+    #修改密码
+    public function changePasswordAction(){
+        $user = $this->get_current_user();
+        if(empty($user['uid'])){
+            $this->redirect('/');
+        }
+        if($this->getRequest()->isPost()) {
+            $old_password = addslashes(htmlspecialchars(trim($_POST['old_password'])));
+            $password = addslashes(htmlspecialchars(trim($_POST['password'])));
+
+            if(empty($old_password) || empty($password)){
+                $this->set_flush_message('新/老密码都不能为空');
+                $this->redirect('/index/changePassword/');
+                exit;
+            }
+            $admin_user_model = new AdminUserModel();
+            $info = $admin_user_model->getDataByUid($user['uid']);
+
+            if(empty($info['uid'])){
+                $this->set_flush_message('账号不存在');
+                $this->redirect('/login/');
+                exit;
+            }
+
+            if(md5(md5($old_password).$info['salt']) <> $info['password']){
+                $this->set_flush_message('原始密码不正确');
+                $this->redirect('/index/changePassword/');
+                exit;
+            }
+
+            $update = [
+                'password' => md5(md5($password).$info['salt'])
+            ];
+            $admin_user_model->updateData($update,$info['uid']);
+            $this->set_flush_message('密码修改成功');
+            $this->redirect('/login/');
+            exit;
+        }
+    }
 }
 
 

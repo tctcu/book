@@ -22,6 +22,7 @@
 					  <td>
 						  <a class="btn btn-info btn-xs" href="/admin/adminuser/role/?uid=<?php echo $row['uid']?>"><i class="glyphicon glyphicon-edit"> </i> 设置权限</a>
 						  <a class="btn btn-success btn-xs" href="/admin/adminuser/create/?uid=<?php echo $row['uid']?>"><i class="glyphicon glyphicon-edit"> </i> 编辑</a>
+						  <a class="btn btn-danger btn-xs" onclick="delAlert('/admin/adminuser/reset/?uid=<?php echo $row['uid']?>')"><i class="glyphicon glyphicon-edit"> </i> 重置密码</a>
 					  </td>
 					</tr>
   	     		<?php } ?>

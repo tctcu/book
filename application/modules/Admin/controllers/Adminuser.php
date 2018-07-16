@@ -128,5 +128,34 @@ class AdminUserController extends AdminController{
 		$this->_view->user_info = $user_info;
 		$this->_layout->meta_title = '修改后台用户权限';
 	}
+
+	#密码重置
+	function resetAction(){
+		$uid = isset($_REQUEST['uid']) ? intval($_REQUEST['uid']) : 0;
+		if(empty($uid)){
+			$this->set_flush_message('未选择用户');
+			$this->redirect('/admin/adminuser/index');
+			return False;
+		}
+
+		$admin_user_model = new AdminUserModel();
+		$info = $admin_user_model->getDataByUid($uid);
+		if(empty($info['uid'])){
+			$this->set_flush_message('后台用户不存在');
+			$this->redirect('/admin/adminuser/index');
+			return False;
+		}
+		$password = $uid.'123456';
+		$salt = rand(1000,9999);
+		$update = [
+			'salt' => $salt,
+			'password' => md5(md5($password).$salt)
+		];
+		$admin_user_model->updateData($update,$uid);
+		$str = '密码重置为'.$password;
+		$this->set_flush_message($str);
+		$this->redirect('/admin/adminuser/index');
+		return FALSE;
+	}
 	
 }

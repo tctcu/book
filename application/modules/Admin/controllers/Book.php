@@ -296,48 +296,4 @@ class BookController extends AdminController
 		$this->_layout->meta_title = '书籍归还';
 	}
 
-	#活动审核记录
-	function recordAction(){
-		$this->_layout->javascript_block = array(
-			'/js/jquery.datetimepicker.hour.js'
-		);
-
-		$this->_layout->css_block = array(
-			'/css/jquery.datetimepicker.css'
-		);
-		$condition = array();
-		$id = !empty($_REQUEST['id']) ? intval($_REQUEST['id']) : '0';
-		$condition['aid'] = !empty($_REQUEST['aid']) ? intval($_REQUEST['aid']) : '0';
-		$condition['uid'] = !empty($_REQUEST['uid']) ? intval($_REQUEST['uid']) : '0';
-		$condition['type'] = !empty($_REQUEST['type']) ? intval($_REQUEST['type']) : '0';
-		$condition['mobile'] = !empty($_REQUEST['mobile']) ? intval($_REQUEST['mobile']) : '0';
-		$condition['begintime'] = !empty($_REQUEST['begintime']) ? strtotime($_REQUEST['begintime']) : '0';
-		$condition['endtime'] = !empty($_REQUEST['endtime']) ? strtotime($_REQUEST['endtime']) : '0';
-
-		$page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
-
-		if($id > 0){
-			$condition['id'] = $id;
-		}
-		$page_size = 20;
-		$activity_record_model = new ActivityRecordModel();
-		$showlist = $activity_record_model->getListData($page,$page_size,$condition);
-
-		$this->_view->page = $page;
-		$this->_view->showlist = $showlist;
-		#分页处理
-		$totalnum = $activity_record_model->getListCount($condition);
-		$condition['begintime'] = !empty($_REQUEST['begintime']) ? $_REQUEST['begintime'] : '';
-		$condition['endtime'] = !empty($_REQUEST['endtime']) ? $_REQUEST['endtime'] : '';
-		$pagination = $this->getPagination($totalnum, $page, $page_size);
-		$this->_view->page = $page;
-		$this->_view->pager = new System_Page($this->base_url, $condition, $pagination);
-
-		$this->_view->rowsets = $showlist;
-
-		$this->_view->params = $condition;
-		$this->_view->show_menu = 'activity';
-		$this->_layout->meta_title = '活动审核记录';
-	}
-
 }

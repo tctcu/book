@@ -60,6 +60,7 @@ insert into admin_access (id, title, m, c, a) values (3002, '押金记录', 'adm
 insert into admin_access (id, title, m, c, a) values (8001, '后台用户管理', 'admin', 'adminuser', 'index');
 insert into admin_access (id, title, m, c, a) values (8002, '编辑用户', 'admin', 'adminuser', 'create');
 insert into admin_access (id, title, m, c, a) values (8003, '权限控制', 'admin', 'adminuser', 'role');
+insert into admin_access (id, title, m, c, a) values (8004, '密码重置', 'admin', 'adminuser', 'reset');
 
 
 INSERT INTO admin_roles (uid,access_id,created_at) VALUES (1,1001,1530981900);
