@@ -12,6 +12,7 @@ class TestController extends Yaf_Controller_Abstract
         $user_info_arr =$model->getUserInfo($access_token,'oFQjBwgoBiyamvvvwYW42U3hooHI');
         echo '<pre>';
         print_r($user_info_arr);die;
+        echo 'hahha';
     }
 
 
