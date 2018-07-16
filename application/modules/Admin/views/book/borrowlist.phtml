@@ -1,0 +1,84 @@
+<div class="row" style="margin-top:40px;">
+    <div class="col-md-3">
+        <?php include(dirname(dirname(__FILE__)).'/admin_left_menu.phtml');?>
+    </div>
+    <div class="col-md-9">
+        <style>
+            .form-div{display:inline-block; min-width:400px;margin-bottom:15px;}
+            .form-div label{width:100px;}
+        </style>
+        <form class="form-inline" role="form" action = "/admin/book/borrowList" method = "GET">
+            <div class="form-div">
+                <label>借阅人编号：</label>
+                <input type="text" name="uid" value="<?php if(!empty($params['uid'])){ echo $params['uid']; } ?>"/>
+            </div>
+            <div class="form-div" >
+                <label>借阅书名：</label>
+                <input type="text"  name="book_title" value="<?php if(!empty($params['book_title'])){ echo $params['book_title']; } ?>"/>
+            </div>
+            <br>
+            <div class="form-div">
+                <label>借阅人手机号：</label>
+                <input type="text" name="user_mobile" value="<?php if(!empty($params['user_mobile'])){ echo $params['user_mobile']; } ?>"/>
+            </div>
+            <div class="form-div">
+                <label>借阅人姓名：</label>
+                <input type="text" name="user_name" value="<?php if(!empty($params['user_name'])){ echo $params['user_name']; } ?>"/>
+            </div>
+            <br>
+            <div class="form-div">
+                <label>借阅书籍编号：</label>
+                <input type="text" name="bid" value="<?php if(!empty($params['bid'])){ echo $params['bid']; } ?>"/>
+            </div>
+            <br>
+            <div class="form-div" >
+                <label>借阅书类型：</label>
+                <select name="book_type">
+                    <option value="0" <?php if(!isset($params['book_type']) || $params['book_type'] == '0' ){ echo "selected"; } ?>><?php echo '全部';?></option>
+                    <?php foreach($type as $k=>$v){ ?>
+                        <option value="<?php echo $k;?>" <?php if(isset($params['book_type']) && $params['book_type'] == $k ){ echo "selected"; } ?>><?php echo $v;?></option>
+                    <?php } ?>
+                </select>
+            </div>
+            <div class="form-div">
+                <label>借阅状态：</label>
+                <input type="radio"  name="status" value="" <?php if(empty($params['status'])){ echo 'checked';} ?>/> 全部
+                <input type="radio"  name="status" value="1" <?php if(!empty($params['status']) && $params['status']=='1'){ echo 'checked'; } ?>/> 借阅中
+                <input type="radio"  name="status" value="2" <?php if(!empty($params['status']) && $params['status']=='2'){ echo 'checked'; } ?>/> 已归还
+                <input type="radio"  name="status" value="3" <?php if(!empty($params['status']) && $params['status']=='3'){ echo 'checked'; } ?>/> 逾期未还
+            </div>
+            <br/>
+            <button type="submit" class="btn btn-default">搜索</button>
+            <br/><br/>
+        </form>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="app-panel-title" >书籍借阅列表</span>
+                <div style="clear:both;"></div>
+            </div>
+
+            <div class="panel-body">
+                <table class="table table-bordered table-striped">
+                    <tr><td>ID</td><td>类型</td><td>书名</td><td>书籍分类</td><td>借阅人/手机号</td><td>借阅时间</td><td>归还操作</td></tr>
+                    <?php foreach ($show_list as $id => $val){ ?>
+                        <tr>
+                            <td ><?php echo $val['id']?></td>
+                            <td ><?php echo $type[$val['book_type']];?></td>
+                            <td ><a href="/admin/book/index?title=<?php echo $val['book_title']?>"><?php echo $val['book_title']?></a></td>
+                            <td ><?php echo $val['book_category']?></td>
+                            <td ><a href="/admin/user/index?name=<?php echo $val['user_name']?>"><?php echo $val['user_name']?></a><br><?php echo $val['user_mobile']?></td>
+                            <td ><?php echo date("Y-m-d H:i",$val['start_time'])?> 至<br><?php echo date("Y-m-d H:i",$val['end_time'])?></td>
+                            <td ><?php if( $val['status']==1){?>
+                                    <a class="btn btn-warning btn-xs confirm" href="/admin/book/back/?id=<?php echo $val['id']?>"><i class="glyphicon glyphicon-arrow-right"></i>归还</a>
+                                <?php }else{
+                                    echo date("Y-m-d H:i",$val['return_time']).'<br>已归还';
+                                } ?>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                </table>
+                <?php $pager->render();?>
+            </div>
+        </div>
+    </div>
+</div>

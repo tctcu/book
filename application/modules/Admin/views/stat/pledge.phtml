@@ -1,0 +1,58 @@
+<div class="row" style="margin-top:40px;">
+    <div class="col-md-3">
+        <?php include(dirname(dirname(__FILE__)).'/admin_left_menu.phtml');?>
+    </div>
+    <div class="col-md-9">
+        <style>
+            .form-div{display:inline-block; min-width:400px;margin-bottom:15px;}
+            .form-div label{width:100px;}
+        </style>
+        <form class="form-inline" role="form" action = "/admin/stat/pledge" method = "GET">
+            <div class="form-div">
+                <label>用户编号：</label>
+                <input type="text" name="uid" value="<?php if(!empty($params['uid'])){ echo $params['uid']; } ?>"/>
+            </div>
+            <div class="form-div">
+                <label>用户姓名：</label>
+                <input type="text" name="user_name" value="<?php if(!empty($params['user_name'])){ echo $params['user_name']; } ?>"/>
+            </div>
+            <br>
+            <div class="form-div">
+                <label>用户手机号：</label>
+                <input type="text" name="user_mobile" value="<?php if(!empty($params['user_mobile'])){ echo $params['user_mobile']; } ?>"/>
+            </div>
+            <br>
+            <div class="form-div">
+                <label>押金操作类型：</label>
+                <input type="radio"  name="type" value="" <?php if(empty($params['type'])){ echo 'checked';} ?>/> 全部
+                <input type="radio"  name="type" value="1" <?php if(!empty($params['type']) && $params['type']=='1'){ echo 'checked'; } ?>/> 充值
+                <input type="radio"  name="type" value="2" <?php if(!empty($params['type']) && $params['type']=='2'){ echo 'checked'; } ?>/> 退还
+            </div>
+            <br/>
+            <button type="submit" class="btn btn-default">搜索</button>
+            <br/><br/>
+        </form>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="app-panel-title" >书籍借阅列表</span>
+                <div style="clear:both;"></div>
+            </div>
+
+            <div class="panel-body">
+                <table class="table table-bordered table-striped">
+                    <tr><td>ID</td><td>用户姓名/手机号</td><td>押金操作类型</td><td>金额</td><td>时间</td></tr>
+                    <?php foreach ($show_list as $id => $val){ ?>
+                        <tr>
+                            <td ><?php echo $val['id']?></td>
+                            <td ><a href="/admin/user/index?name=<?php echo $val['user_name']?>"><?php echo $val['user_name']?></a><br><?php echo $val['user_mobile']?></td>
+                            <td><?php if($val['type']==1){echo '充值押金';}else{echo '退还押金';}?></td>
+                            <td><?php echo $val['money']?></td>
+                            <td><?php echo date("Y-m-d H:i:s",$val['created_at'])?></td>
+                        </tr>
+                    <?php } ?>
+                </table>
+                <?php $pager->render();?>
+            </div>
+        </div>
+    </div>
+</div>

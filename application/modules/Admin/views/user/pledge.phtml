@@ -1,0 +1,74 @@
+<h2>[<?php echo $info['name']?>]押金操作</h2>
+<div class="col-md-12" style="padding-left:0px;">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="app-panel-title" >[<?php echo $info['name']?>]押金操作</span>
+            <a class="btn btn-sm btn-success app-panel-btn" href="/admin/user/index?uid=<?php echo $info['uid']?>"> <i class="glyphicon glyphicon-chevron-right"></i> 返回用户列表</a>
+            <div style="clear:both;"></div>
+        </div>
+
+        <div class="panel-body">
+            <?php if(!empty($message)):?>
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <?php echo htmlspecialchars($message)?>
+                </div>
+            <?php endif;?>
+            <form action="/admin/user/pledge" method="post" role="form" id="user-form">
+                <input type="hidden" name="uid" value="<?php echo $info['uid']?>" />
+                <div class="form-group">
+                    <label>操作类型：</label>
+                    <input type="radio"  name="type" value="1" />支付押金
+                    <input type="radio"  name="type" value="2" />退还押金
+                    <span class="help-block error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="money">金额:</label>
+                    <input type="text" name="money" placeholder="操作金额" size="50">
+                    <span class="help-block error"></span>
+                </div>
+
+                <button type="submit" class="btn btn-default" >提交</button>
+            </form>
+        </div>
+        <br/>
+        <br/>
+        <div class="panel-heading">
+            <span class="app-panel-title" >[<?php echo $info['name']?>]押金操作记录</span>
+            <div style="clear:both;"></div>
+        </div>
+        <div class="panel-body">
+            <table class="table table-bordered table-striped">
+                <tr><td>UID</td><td>姓名</td><td>操作类型</td><td>操作金额</td><td>操作时间</td></tr>
+                <?php foreach($rowsets as $val){ ?>
+                    <tr>
+                        <td><?php echo $val['uid']?></td>
+                        <td><?php echo $info['name']?></td>
+                        <td><?php if($val['type']==1){echo '充值押金';}else{echo '退还押金';}?></td>
+                        <td><?php echo $val['money']?></td>
+                        <td><?php echo date("Y-m-d H:i:s",$val['created_at'])?></td>
+                    </tr>
+                <?php } ?>
+            </table>
+            <br/>
+        </div>
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+    $("#user-form").validate({
+        rules: {
+            type: { required:true }
+            ,money: { required:true }
+        },
+        messages: {
+            type: { required: "操作类型必选" }
+            ,money: { required: "金额必填" }
+        },
+        errorElement: "span",
+        errorPlacement: function(error, element) {
+            element.nextAll("span.error").replaceWith(error) ;
+        }
+    });
+</script>

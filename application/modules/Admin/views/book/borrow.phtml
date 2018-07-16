@@ -1,0 +1,66 @@
+<h2>[<?php echo $info['name']?>]借阅书籍</h2>
+<div class="col-md-12" style="padding-left:0px;">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="app-panel-title" >[<?php echo $info['name']?>]借阅书籍</span>
+            <a class="btn btn-sm btn-success app-panel-btn" href="/admin/user/index/"> <i class="glyphicon glyphicon-chevron-right"></i> 返回用户列表</a>
+            <div style="clear:both;"></div>
+        </div>
+
+        <div class="panel-body">
+            <?php if(!empty($message)):?>
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <?php echo htmlspecialchars($message)?>
+                </div>
+            <?php endif;?>
+            <form action="/admin/book/borrow" method="post" role="form">
+                <input type="hidden" name="uid" value="<?php echo $info['uid']?>" />
+                <div class="form-group">
+                    <label for="bid">书籍编号:</label>
+                    <input type="text" name="bid" placeholder="填写借阅书籍编号" size="50">
+                    <span class="help-block error"></span>
+                    <p><a target="_blank" href="/admin/book/index">查询书籍编号>>></a></p>
+                </div>
+                <div class="form-div">
+                    <label for="start_time">借阅开始时间:</label>
+                    <label >
+                        <input type="text" name="start_time" id="start" value="" />
+                    </label>
+                    <span class="help-block error"></span>
+                </div>
+                <div class="form-div">
+                    <label for="end_time">预计归还时间:</label>
+                    <label >
+                        <input type="text" name="end_time" id = "end" value="" />
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-default" >提交</button>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+    $( document ).ready(function() {
+        jQuery('#start').datetimepicker();
+        jQuery( "#end" ).datetimepicker();
+    });
+
+    $("#user-form").validate({
+        rules: {
+            bid: { required:true }
+            ,start_time: { required:true }
+            ,end_time: { required:true }
+        },
+        messages: {
+            bid: { required: "书籍编号必填" }
+            ,start_time: { required: "借阅开始时间必填" }
+            ,end_time: { required: "预计归还时间必填" }
+        },
+        errorElement: "span",
+        errorPlacement: function(error, element) {
+            element.nextAll("span.error").replaceWith(error) ;
+        }
+    });
+</script>

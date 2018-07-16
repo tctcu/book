@@ -1,0 +1,89 @@
+<h2>新增/编辑书籍</h2>
+<div class="col-md-12" style="padding-left:0px;">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="app-panel-title" >新增/编辑书籍</span>
+            <div style="clear:both;"></div>
+        </div>
+        <div class="panel-body">
+            <style>
+                .form-group label{width: 18%; text-align:left;}
+            </style>
+            <form action="/admin/book/create" method="post" role="form" id="form" enctype="multipart/form-data" AutoComplete="off" >
+
+                <?php if(!empty($info)):?>
+                    <input type="hidden" name="id" value="<?php echo $info['id']?>" />
+                <?php endif;?>
+                <div class="form-group">
+                    <label for="type">选择书籍资料类型</label>
+                    <select name="type">
+                        <?php foreach($type as $k=>$v){ ?>
+                            <option value="<?php echo $k;?>" <?php if(isset($info['type']) && $info['type'] == $k ){ echo "selected"; } ?>><?php echo $v;?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="title">书名：</label>
+                    <input type="text" name="title" <?php if(!empty($info)){ ?>value="<?php echo $info['title']?>" <?php } ?> size="100">
+                    <span class="help-block error" style="display: inline-block;"></span>
+                </div>
+                <div class="form-group">
+                    <label for="category">书籍分类：</label>
+                    <select name="category">
+                        <?php foreach($category as $v){ ?>
+                            <option value="<?php echo $v;?>" <?php if(isset($info['category']) && $info['category'] == $v ){ echo "selected"; } ?>><?php echo $v;?></option>
+                        <?php } ?>
+                    </select>
+                    <span class="help-block error" style="display: inline-block;"></span>
+                </div>
+                <div class="form-group">
+                    <label for="author">作者：</label>
+                    <input type="text" name="author" <?php if(!empty($info)){ ?>value="<?php echo $info['author']?>" <?php } ?> size="50">
+                    <span class="help-block error" style="display: inline-block;"></span>
+                </div>
+                <div class="form-group">
+                    <label for="press">出版社：</label>
+                    <input type="text" name="press"  <?php if(!empty($info)){ ?>value="<?php echo $info['press'];}?>" size="50">
+                    <span class="help-block error" style="display: inline-block;"></span>
+                </div>
+                <div class="form-group">
+                    <label for="version">书籍版本：</label>
+                    <input type="text" name="version"  <?php if(!empty($info)){ ?>value="<?php echo $info['version'];}?>" size="50" placeholder="填写书籍版本(中文版/和合本/新译本/第一版/第一期 等)">
+                    <span class="help-block error" style="display: inline-block;"></span>
+                </div>
+                <div class="form-group">
+                    <label for="price">定价：</label>
+                    <input type="text" name="price"  <?php if(!empty($info)){ ?>value="<?php echo $info['price'];}?>" size="20">
+                    <span class="help-block error" style="display: inline-block;"></span>
+                </div>
+
+                <a href="javascript:void(0)" id="save" class="btn btn-default">提交</a>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+    $("#save").click(function () {
+
+        $("#form").submit();
+    });
+
+    $("#form").validate({
+        rules: {
+            title: "required"
+            ,category: "required"
+            ,type: "required"
+        },
+        messages: {
+            title: { required: "书名必填"}
+            ,category: { required: "书籍分类必选"}
+            ,type: { required: "书籍资料类型必选"}
+        },
+        errorElement: "span",
+        errorPlacement: function (error, element) {
+            element.nextAll("span.error").replaceWith(error);
+        }
+    });
+</script>

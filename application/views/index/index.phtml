@@ -1,0 +1,19 @@
+<div id="message_div"> </div>
+
+<div class="hero-unit unit_home">
+    <div class="row">
+        <div class="col-md-6">
+            <h1>安徽同行者书籍管理软件</h1>
+            <p>* 书籍资料管理</p>
+            <p>* 开设账户</p>
+            <p>* 押金充值与退还</p>
+            <p>* 书籍借阅与归还</p>
+            <?php if( $user_is_logined == 0){ ?>
+                <p>
+                    <a href="/login" class="btn btn-success btn-large">登录系统</a>
+                </p>
+            <?php }; ?>
+        </div>
+        <div class="col-md-6"></div>
+    </div>
+</div>

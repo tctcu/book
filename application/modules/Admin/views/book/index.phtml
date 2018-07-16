@@ -1,0 +1,87 @@
+<div class="row" style="margin-top:40px;">
+    <div class="col-md-3">
+        <?php include(dirname(dirname(__FILE__)).'/admin_left_menu.phtml');?>
+    </div>
+    <div class="col-md-9">
+        <style>
+            .form-div{display:inline-block; min-width:400px;margin-bottom:15px;}
+            .form-div label{width:100px;}
+        </style>
+        <form class="form-inline" role="form" action = "/admin/book/index" method = "GET">
+            <div class="form-div">
+                <label>书籍编号：</label>
+                <input type="text" name="id" value="<?php if(!empty($params['id'])){ echo $params['id']; } ?>"/>
+            </div>
+            <div class="form-div" >
+                <label>书名：</label>
+                <input type="text"  name="title" value="<?php if(!empty($params['title'])){ echo $params['title']; } ?>"/>
+            </div>
+            <br/>
+            <div class="form-div" >
+                <label>类型：</label>
+                <select name="type">
+                    <option value="0" <?php if(!isset($params['type']) || $params['type'] == '0' ){ echo "selected"; } ?>><?php echo '全部';?></option>
+                    <?php foreach($type as $k=>$v){ ?>
+                    <option value="<?php echo $k;?>" <?php if(isset($params['type']) && $params['type'] == $k ){ echo "selected"; } ?>><?php echo $v;?></option>
+                    <?php } ?>
+                </select>
+            </div>
+            <br/>
+            <div class="form-div" >
+                <label>书籍分类：</label>
+                <select name="category">
+                    <option value="0" <?php if(!isset($params['category']) || $params['category'] == '' ){ echo "selected"; } ?>><?php echo '全部';?></option>
+                    <?php foreach($category as $v){ ?>
+                        <option value="<?php echo $v;?>" <?php if(isset($params['category']) && $params['category'] == $v ){ echo "selected"; } ?>><?php echo $v;?></option>
+                    <?php } ?>
+                </select>
+            </div>
+            <br>
+            <div class="form-div" >
+                <label>状态：</label>
+                <input type="radio"  name="status" value="" <?php if(empty($params['status'])){ echo 'checked';} ?>/> 全部
+                <input type="radio"  name="status" value="1" <?php if(!empty($params['status']) && $params['status']=='1'){ echo 'checked'; } ?>/> 上架
+                <input type="radio"  name="status" value="2" <?php if(!empty($params['status']) && $params['status']=='2'){ echo 'checked'; } ?>/> 下架
+                <input type="radio"  name="status" value="3" <?php if(!empty($params['status']) && $params['status']=='3'){ echo 'checked'; } ?>/> 已借出
+            </div>
+            <br/>
+            <button type="submit" class="btn btn-default">搜索</button>
+            <br/><br/>
+        </form>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="app-panel-title" >书籍列表</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="btn btn-sm btn-success app-panel-btn" href="/admin/book/create"> <i class="glyphicon glyphicon-plus"></i> 增加书籍</a>
+                <div style="clear:both;"></div>
+            </div>
+
+            <div class="panel-body">
+                <table class="table table-bordered table-striped">
+                    <tr><td>书籍编号</td><td>类型</td><td>书名</td><td>书籍分类</td><td>作者</td><td>出版社</td><td>版本</td><td>操作</td><td>管理</td></tr>
+                    <?php foreach ($show_list as $id => $val){ ?>
+                        <tr>
+                            <td ><?php echo $val['id']?></td>
+                            <td ><?php echo $type[$val['type']];?></td>
+                            <td ><?php echo $val['title']?></td>
+                            <td ><?php echo $val['category']?></td>
+                            <td ><?php echo $val['author']?></td>
+                            <td ><?php echo $val['press']?></td>
+                            <td ><?php echo $val['version']?></td>
+                            <td ><?php if( $val['status']==1){?>
+                                    <a class="btn btn-warning btn-xs confirm" href="/admin/book/checkStatus/?id=<?php echo $val['id']?>&status=2"><i class="glyphicon glyphicon-arrow-down"></i>下架</a>
+                                <?php }elseif($val['status']==2){ ?>
+                                    <a class="btn btn-info btn-xs confirm" href="/admin/book/checkStatus/?id=<?php echo $val['id']?>&status=1"><i class="glyphicon glyphicon-arrow-up"></i>上架</a>
+                                <?php }else{echo '已借出';} ?>
+                            </td>
+                            <td align="center">
+                                <a class="btn btn-success btn-xs confirm" href="/admin/book/create/?id=<?php echo $val['id']?>">编辑</a>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                </table>
+                <?php $pager->render();?>
+            </div>
+        </div>
+    </div>
+</div>

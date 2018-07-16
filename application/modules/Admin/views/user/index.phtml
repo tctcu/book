@@ -1,0 +1,62 @@
+<div class="row" style="margin-top:40px;">
+    <div class="col-md-3">
+        <?php include(dirname(dirname(__FILE__)).'/admin_left_menu.phtml');?>
+    </div>
+    <div class="col-md-9">
+        <style>
+            .form-div{display:inline-block; min-width:400px;margin-bottom:15px;}
+            .form-div label{width:80px;}
+            .form-div input{width:260px;}
+        </style>
+        <form class="form-inline" role="form" action = "/admin/user/index" method = "GET">
+            <div class="form-div">
+                <label>用户编号：</label>
+                <input type="text" name="uid" value="<?php if(!empty($params['uid'])){ echo $params['uid']; } ?>"/>
+            </div>
+            <div class="form-div">
+                <label>手机号：</label>
+                <input type="text" name="mobile" value="<?php if(!empty($params['mobile'])){ echo $params['mobile']; } ?>"/>
+            </div>
+            <br/>
+            <div class="form-div">
+                <label>姓名：</label>
+                <input type="text" name="name" value="<?php if(!empty($params['name'])){ echo $params['name']; } ?>"/>
+            </div>
+            <br/>
+            <button type="submit" class="btn btn-default">搜索</button>
+            <br/><br/>
+        </form>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="app-panel-title" >用户列表</span>
+                <a class="btn btn-sm btn-success app-panel-btn" href="/admin/user/create/"> <i class="glyphicon glyphicon-plus"></i>新增用户</a>
+                <div style="clear:both;"></div>
+            </div>
+
+            <div class="panel-body">
+                <table class="table table-bordered table-striped">
+                    <tr><td>用户编号</td><td>姓名</td><td>手机号</td><td>押金状态</td><td>账号状态</td><td>注册时间</td><td>管理</td></tr>
+                    <?php foreach($rowsets as $val){ ?>
+                        <tr>
+                            <td><?php echo $val['uid']?></td>
+                            <td><?php echo $val['name']?></td>
+                            <td><?php echo $val['mobile']?></td>
+                            <td><?php if($val['pledge']==2){echo '已支付';?>
+                                    <a class="btn btn-info btn-xs" href="/admin/book/borrow/?uid=<?php echo $val['uid']?>"><i class="glyphicon glyphicon-edit"> </i>借阅</a>
+                                <?php }else{echo '未支付';}?></td>
+                            <td><?php if($val['status']==1){echo '正常';}else{echo '封禁';}?></td>
+                            <td><?php echo date("Y-m-d H:i:s",$val['created_at'])?></td>
+                            <td>
+                                <a class="btn btn-success btn-xs" href="/admin/user/create/?uid=<?php echo $val['uid']?>"><i class="glyphicon glyphicon-edit"> </i> 编辑</a>
+                                <a class="btn btn-danger btn-xs" href="/admin/user/pledge/?uid=<?php echo $val['uid']?>"><i class="glyphicon glyphicon-edit"> </i> 操作押金</a>
+                                <a class="btn btn-warning btn-xs" href="/admin/book/borrowList/?uid=<?php echo $val['uid']?>"><i class="glyphicon glyphicon-edit"> </i> 借书记录</a>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                </table>
+                <?php $pager->render();?>
+                <br/>
+            </div>
+        </div>
+    </div>
+</div>

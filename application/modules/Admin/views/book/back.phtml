@@ -1,0 +1,48 @@
+<h2>[<?php echo $info['name']?>]归还书籍</h2>
+<div class="col-md-12" style="padding-left:0px;">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="app-panel-title" >[<?php echo $info['name']?>]归还书籍</span>
+            <a class="btn btn-sm btn-success app-panel-btn" href="/admin/book/borrowList?uid=<?php echo $info['uid']?>"> <i class="glyphicon glyphicon-chevron-right"></i> 返回书籍借阅列表</a>
+            <div style="clear:both;"></div>
+        </div>
+
+        <div class="panel-body">
+            <?php if(!empty($message)):?>
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <?php echo htmlspecialchars($message)?>
+                </div>
+            <?php endif;?>
+            <form action="/admin/book/back" method="post" role="form">
+                <input type="hidden" name="id" value="<?php echo $id?>" />
+                <div class="form-div">
+                    <label for="return_time">实际归还时间:</label>
+                    <label >
+                        <input type="text" name="return_time" id = "return" value="" />
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-default" >提交</button>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+    $( document ).ready(function() {
+        jQuery('#return').datetimepicker();
+    });
+
+    $("#user-form").validate({
+        rules: {
+            return_time: { required:true }
+        },
+        messages: {
+            return_time: { required: "实际归还时间必填" }
+        },
+        errorElement: "span",
+        errorPlacement: function(error, element) {
+            element.nextAll("span.error").replaceWith(error) ;
+        }
+    });
+</script>

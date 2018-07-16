@@ -1,0 +1,27 @@
+<div class="row" style="margin-top:40px;">
+    <div class="col-md-3">
+        <?php include(dirname(dirname(__FILE__)).'/admin_left_menu.phtml');?>
+    </div>
+    <div class="col-md-9">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="app-panel-title" >书籍出借排行</span>
+                <div style="clear:both;"></div>
+            </div>
+
+            <div class="panel-body">
+                <table class="table table-bordered table-striped">
+                    <tr><td>书籍编号</td><td>书名</td><td>出借次数</td></tr>
+                    <?php foreach ($show_list as $id => $val){ ?>
+                        <tr>
+                            <td ><a href="/admin/book/index?id=<?php echo $val['bid']?>"><?php echo $val['bid']?></a></td>
+                            <td ><a href="/admin/book/index?title=<?php echo $val['book_title']?>"><?php echo $val['book_title']?></a></td>
+                            <td ><?php echo $val['num']?></td>
+                        </tr>
+                    <?php } ?>
+                </table>
+                <?php $pager->render();?>
+            </div>
+        </div>
+    </div>
+</div>
