@@ -155,6 +155,11 @@ class BookController extends AdminController
 		$user_model = new UserModel();
 		if($uid > 0){
 			$info = $user_model->getDataByUid($uid);
+			if($info['status']<>1){
+				$this->set_flush_message('该用户已封禁,无法借阅书籍');
+				$this->redirect('/admin/user/index');
+				return FALSE;
+			}
 		}else{
 			$this->set_flush_message('非法请求');
 			$this->redirect('/admin/user/index');

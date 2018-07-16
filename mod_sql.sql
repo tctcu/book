@@ -53,6 +53,7 @@ insert into admin_access (id, title, m, c, a) values (2001, '用户列表', 'adm
 insert into admin_access (id, title, m, c, a) values (2002, '新增/编辑用户', 'admin', 'user', 'create');
 insert into admin_access (id, title, m, c, a) values (2003, '用户禁封/解封', 'admin', 'user', 'checkStatus');
 insert into admin_access (id, title, m, c, a) values (2004, '用户押金操作', 'admin', 'user', 'pledge');
+insert into admin_access (id, title, m, c, a) values (2005, '用户密码重置', 'admin', 'user', 'reset');
 
 insert into admin_access (id, title, m, c, a) values (3001, '书籍出借排行', 'admin', 'stat', 'index');
 insert into admin_access (id, title, m, c, a) values (3002, '押金记录', 'admin', 'stat', 'pledge');

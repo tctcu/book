@@ -29,7 +29,7 @@ class UserController extends AdminController
 
 		$this->_view->rowsets = $showlist;
 		$this->_view->params = $condition;
-		$this->_layout->meta_title = '用户表';
+		$this->_layout->meta_title = '用户列表';
 	}
 
 	#添加/编辑用户
@@ -91,6 +91,51 @@ class UserController extends AdminController
 		$this->_layout->meta_title = '编辑/添加用户';
 	}
 
+	#切换用户账号状态
+	function checkStatusAction(){
+		$uid = !empty($_REQUEST['uid']) ? intval($_REQUEST['uid']) : '0';
+		$status = !empty($_REQUEST['status']) ? intval($_REQUEST['status']) : '1';
+		if($uid){
+			$user_model = new UserModel();
+			$data['status'] = $status;
+			$user_model->updateData($data, $uid);
+		}
+		$str = $status == 1 ? '用户已解封' : '用户已禁封';
+		$this->set_flush_message($str);
+		$this->redirect($this->referer());
+		return FALSE;
+	}
+
+	#用户密码重置
+	function resetAction(){
+		$uid = isset($_REQUEST['uid']) ? intval($_REQUEST['uid']) : 0;
+		if(empty($uid)){
+			$this->set_flush_message('未选择用户');
+			$this->redirect('/admin/user/index');
+			return False;
+		}
+
+		$user_model = new UserModel();
+		$info = $user_model->getDataByUid($uid);
+		if(empty($info['uid'])){
+			$this->set_flush_message('用户不存在');
+			$this->redirect('/admin/user/index');
+			return False;
+		}
+		$password = $uid.'123456';
+		$salt = rand(1000,9999);
+		$update = [
+			'salt' => $salt,
+			'password' => md5(md5($password).$salt)
+		];
+		$user_model->updateData($update,$uid);
+		$str = '密码重置为'.$password;
+		$this->set_flush_message($str);
+		$this->redirect('/admin/user/index');
+		return FALSE;
+	}
+
+
 	#操作押金
 	function pledgeAction(){
 		$uid = !empty($_REQUEST['uid']) ? intval($_REQUEST['uid']) : 0;
@@ -122,13 +167,22 @@ class UserController extends AdminController
 				'type' => $type,
 			);
 
+			if($type==1){//支付押金
+				$update['pledge'] = 2;//押金已付
+			}else{
+				#退押金时,查询是否有书籍未归还
+				$user_borrow_model = new UserBorrowModel();
+				if($user_borrow_model->getCountByCondition(array('uid'=>$uid,'status'=>1))>0){
+					$this->set_flush_message("用户有书借阅未归还,不可退款押金");
+					$this->redirect('/admin/book/borrowList?uid='.$uid);
+					return FALSE;
+				}
+
+				$update['pledge'] = 1;//押金未付
+			}
+
 			try{
 				$user_pledge_model->addData($data);
-				if($type==1){//支付押金
-					$update['pledge'] = 2;//押金已付
-				}else{
-					$update['pledge'] = 1;//押金未付
-				}
 				$user_model->updateData($update,$uid);
 			}catch(Exception $e){
 				$this->set_flush_message("添加押金操作记录失败");

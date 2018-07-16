@@ -39,6 +39,30 @@ class UserBorrowModel extends MysqlModel {
         return false;
     }
 
+    #根据条件查询数量
+    function getCountByCondition($condition = array()){
+        if(empty($condition)){
+            return 0;
+        }
+        $sql = "select count(*) as num from {$this->_name} where 1 ";
+        if(!empty($condition['uid'])){
+            $sql .= " and uid={$condition['uid']} ";
+        }
+        if(!empty($condition['bid'])){
+            $sql .= " and bid={$condition['bid']} ";
+        }
+        if(!empty($condition['status'])){
+            $sql .= " and status={$condition['status']} ";
+        }
+
+        $result = $this->_db->fetchRow($sql);
+        $num = 0;
+        if(!empty($result['num'])) {
+            $num = $result['num'];
+        }
+        return $num;
+    }
+
     function getListData($page = 1,$page_size =  20,$condition = array()){
         $sql = " select b.title as book_title,b.status as book_status,b.type as book_type,b.category as book_category,
                   u.name as user_name,u.mobile as user_mobile,

@@ -35,17 +35,23 @@
 
             <div class="panel-body">
                 <table class="table table-bordered table-striped">
-                    <tr><td>用户编号</td><td>姓名</td><td>手机号</td><td>押金状态</td><td>账号状态</td><td>注册时间</td><td>管理</td></tr>
+                    <tr><td>用户编号</td><td>姓名/手机号</td><td>押金状态</td><td>状态</td><td>账号操作</td><td>注册时间</td><td>管理</td></tr>
                     <?php foreach($rowsets as $val){ ?>
                         <tr>
                             <td><?php echo $val['uid']?></td>
-                            <td><?php echo $val['name']?></td>
-                            <td><?php echo $val['mobile']?></td>
+                            <td><?php echo $val['name']?><br><?php echo $val['mobile']?></td>
                             <td><?php if($val['pledge']==2){echo '已支付';?>
                                     <a class="btn btn-info btn-xs" href="/admin/book/borrow/?uid=<?php echo $val['uid']?>"><i class="glyphicon glyphicon-edit"> </i>借阅</a>
                                 <?php }else{echo '未支付';}?></td>
-                            <td><?php if($val['status']==1){echo '正常';}else{echo '封禁';}?></td>
-                            <td><?php echo date("Y-m-d H:i:s",$val['created_at'])?></td>
+                            <td><?php if($val['status']==1){ ?> 正常 <?php }else{ ?> 封禁 <?php }?> </td>
+                            <td><?php if($val['status']==1){ ?>
+                                    <a class="btn btn-danger btn-xs" onclick="delAlert('/admin/user/checkStatus/?uid=<?php echo $val['uid']?>&status=2')"> 封禁</a>
+                                <?php }else{ ?>
+                                    <a class="btn btn-warning btn-xs" onclick="delAlert('/admin/user/checkStatus/?uid=<?php echo $val['uid']?>&status=1')"> 解封</a>
+                                <?php }?>
+                                <a class="btn btn-primary btn-xs" onclick="delAlert('/admin/user/reset/?uid=<?php echo $val['uid']?>')">密码重置</a>
+                            </td>
+                            <td><?php echo date("Y-m-d",$val['created_at'])?><br><?php echo date("H:i:s",$val['created_at'])?></td>
                             <td>
                                 <a class="btn btn-success btn-xs" href="/admin/user/create/?uid=<?php echo $val['uid']?>"><i class="glyphicon glyphicon-edit"> </i> 编辑</a>
                                 <a class="btn btn-danger btn-xs" href="/admin/user/pledge/?uid=<?php echo $val['uid']?>"><i class="glyphicon glyphicon-edit"> </i> 操作押金</a>

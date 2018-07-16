@@ -12,9 +12,9 @@
 							'href' => '/admin/book/index/',
 							'style' => 'glyphicon glyphicon-chevron-right'
 						),
-						'borrowList' => array(
+						'borrowlist' => array(
 							'title' => '书籍借阅记录列表',
-							'href' => '/admin/book/borrowList/',
+							'href' => '/admin/book/borrowlist/',
 							'style' => 'glyphicon glyphicon-chevron-right'
 						),
 
