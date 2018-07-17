@@ -40,14 +40,9 @@ class Bootstrap extends Yaf_Bootstrap_Abstract
 
     #路由规则
     public function _initRoute(Yaf_Dispatcher $dispatcher){
-        $router = Yaf_Dispatcher::getInstance()->getRouter();
-
-        $r = new Yaf_Route_Rewrite('/logout',array('controller'=> 'Index','action'=>"logout"));
-        $router->addRoute('index.logout', $r);
-
-        $r = new Yaf_Route_Rewrite('/login',array('controller'=> 'Index','action'=>"login"));
-        $router->addRoute('index', $r);
-
+        //$router = Yaf_Dispatcher::getInstance()->getRouter();
+        //$r = new Yaf_Route_Rewrite('/logout',array('controller'=> 'Index','action'=>"logout"));
+        //$router->addRoute('index.logout', $r);
     }
 
     #layout插件

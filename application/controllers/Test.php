@@ -5,14 +5,18 @@ class TestController extends Yaf_Controller_Abstract
         header('content-type:text/html;charset=utf-8');
     }
 
-    function aAction(){
-        $model = new WechatModel();
-        $token_arr = $model->getAccessToken();
-        $access_token = $token_arr['access_token'];
-        $user_info_arr =$model->getUserInfo($access_token,'oFQjBwgoBiyamvvvwYW42U3hooHI');
-        echo '<pre>';
-        print_r($user_info_arr);die;
-        echo 'hahha';
+    function addPicAction(){
+        if($this->getRequest()->isPost()) {
+            $model = new CommonModel();
+            if (!empty($_FILES['upload_file']) && $_FILES['upload_file']['error'] == 0) {
+                $pic = $model->addPic($upload_file = 'upload_file');
+                if (!empty($pic)) {
+                   echo CommonModel::IMAGE_URL.$pic;
+                } else {
+                  echo '上传失败';die;
+                }
+            }
+        }
     }
 
 

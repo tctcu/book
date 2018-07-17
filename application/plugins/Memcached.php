@@ -1,7 +1,7 @@
 <?php
 class MemcachedPlugin extends Yaf_Plugin_Abstract {
     public function routerShutdown(Yaf_Request_Abstract $request, Yaf_Response_Abstract $response) {
-        $memcached_config_obj = Yaf_Registry::get("config")->get('debug.memcached');
+        $memcached_config_obj = Yaf_Registry::get("config")->get('product.memcached');
         $memcached_obj = Yaf_Registry::get('memcached');
 
         if(empty($memcached_config_obj)){
@@ -10,8 +10,8 @@ class MemcachedPlugin extends Yaf_Plugin_Abstract {
 
         if(empty($memcached_obj)) {
 
-            #$host_env = 'deploy';
-            $host_env = 'devel';
+            $host_env = 'deploy';
+            #$host_env = 'devel';
             try {
 
                 $memcached = new Memcached;
@@ -34,6 +34,6 @@ class MemcachedPlugin extends Yaf_Plugin_Abstract {
     }
 
     public function postDispatch (Yaf_Request_Abstract $request , Yaf_Response_Abstract $response) {
-        #print_r($request);
+
     }
 }

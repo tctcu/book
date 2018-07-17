@@ -3,16 +3,16 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">登录</div>
 			  <div class="panel-body">
-			  	<?php if(!empty($message)):?>
+			  	<?php if(!empty($message)){ ?>
 			  	<div class="alert alert-danger">
 			  		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 			  		<?php echo htmlspecialchars($message)?>
 			  	</div>
-			  	<?php endif;?>
-			    <form action="/login" method="post" role="form">
-			    	<?php if($redirect_url):?>
+			  	<?php } ?>
+			    <form action="/admin/index/login" method="post" role="form">
+			    	<?php if($redirect_url){ ?>
 			    	<input type="hidden" name="redirect_url" value="<?php echo $redirect_url?>" />
-			   	 	<?php endif;?>
+			   	 	<?php } ?>
 					<div class="form-group">
 						<label for="exampleInputMobile">手机号</label>
 			    		<input type="text" class="form-control" name="mobile" id="exampleInputMobile" placeholder="请输入手机号">

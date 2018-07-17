@@ -23,8 +23,7 @@ class LayoutPlugin extends Yaf_Plugin_Abstract {
     }
 
     public function postDispatch ( Yaf_Request_Abstract $request , Yaf_Response_Abstract $response ){
-
-        if( strtolower($request->module) == 'admin' ) {
+        if(strtolower($request->module) == 'admin') {
 
             if( !in_array(strtolower($request->controller),  array())){
                 /* get the body of the response */

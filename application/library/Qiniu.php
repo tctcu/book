@@ -5,9 +5,9 @@ use Qiniu\Storage\UploadManager;
 use Qiniu\Storage\BucketManager;
 
 class Qiniu{
-	private $accessKey = 'WKTc-qzD5nWaiim8DueHoXIQCV2D11j49-14_KZ7';
-	private $secretKey = 'k6M25MPsnlsSB-_L1X0d4axMEleHO_SzoiCTSE_c';
-	private $bucket = 'news';
+	private $accessKey = 'WLyAeA6MKwNv1N_28solEkUkSwLEdvjO9Td3PBrn';
+	private $secretKey = 'af8HSU7uFE_cAYrtCa24KEd9mQtxi6cFJDTce6bo';
+	private $bucket = 'tctcv';
 
 	#鉴权
 	private function auth(){
