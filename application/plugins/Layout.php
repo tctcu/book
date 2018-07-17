@@ -24,9 +24,9 @@ class LayoutPlugin extends Yaf_Plugin_Abstract {
 
     public function postDispatch ( Yaf_Request_Abstract $request , Yaf_Response_Abstract $response ){
 
-        if( !in_array(strtolower($request->module), array( 'wap' ))) {
+        if( strtolower($request->module) == 'admin' ) {
 
-            if( !in_array(strtolower($request->controller),  array('test'))){
+            if( !in_array(strtolower($request->controller),  array())){
                 /* get the body of the response */
                 $body = $response->getBody();
 
@@ -42,15 +42,15 @@ class LayoutPlugin extends Yaf_Plugin_Abstract {
                 $response->setBody($layout->render($this->_layoutFile));
             }
         }
-        
+
     }
 
     public function preDispatch ( Yaf_Request_Abstract $request , Yaf_Response_Abstract $response ){
- 
+
     }
 
     public function preResponse ( Yaf_Request_Abstract $request , Yaf_Response_Abstract $response ){
-        
+
     }
 
     public function routerShutdown ( Yaf_Request_Abstract $request , Yaf_Response_Abstract $response ){

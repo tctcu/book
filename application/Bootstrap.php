@@ -12,6 +12,11 @@ class Bootstrap extends Yaf_Bootstrap_Abstract
         Yaf_Registry::set("config", $config);
     }
 
+    #注册memcache插件
+    public function _initPlugin(Yaf_Dispatcher $dispatcher){
+        $dispatcher->registerPlugin(new MemcachedPlugin());
+    }
+
     #自动加载第3方类库
     public function _initIncludePath(){
         set_include_path(get_include_path() . PATH_SEPARATOR . $this->_config->application->library);
@@ -48,6 +53,8 @@ class Bootstrap extends Yaf_Bootstrap_Abstract
     #layout插件
     public function _initLayout(Yaf_Dispatcher $dispatcher){
         /*layout allows boilerplate HTML to live in /views/layout rather than every script*/
+
+        #非API访问开启模板layout系统
         $layout = new LayoutPlugin('layout.phtml');
         Yaf_Registry::set('layout', $layout);
         /*add the plugin to the dispatcher*/
@@ -56,7 +63,8 @@ class Bootstrap extends Yaf_Bootstrap_Abstract
 
 
     #用户插件
-    public function _initUser(Yaf_Dispatcher $dispatcher){
+    public function _initUser(Yaf_Dispatcher $dispatcher)
+    {
         $dispatcher->registerPlugin(new UserPlugin());
     }
 
