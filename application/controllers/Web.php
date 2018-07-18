@@ -23,17 +23,7 @@ class WebController extends Yaf_Controller_Abstract
 
         $this->_view->page = $page;
         $this->_view->show_list = $show_list;
-        #分页处理
-        $total_num = $book_model->getListCount($condition);
-        $pagination = $this->getPagination($total_num, $page, $page_size);
-        $this->_view->page = $page;
-        $this->_view->pager = new System_Page($this->base_url, $condition, $pagination);
-
-        $this->_view->type = $book_model->type;
-        $this->_view->category = $book_model->category;
-        $this->_view->rowsets = $show_list;
         $this->_view->params = $condition;
-        $this->_layout->meta_title = '书籍列表页';
     }
 
 

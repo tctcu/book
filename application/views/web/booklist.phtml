@@ -1,1 +1,106 @@
-<h1>书籍列表</h1>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.3">
+    <!-- 最新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/docs.css">
+
+    <link rel="shortcut icon" href="favicon.ico" />
+    <script src="/js/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.validate.min.js"></script>
+    <title>同行者借阅书籍列表</title>
+</head>
+<body>
+<div class="container content">
+    <div class="row" style="margin-top:40px;">
+        <div class="col-md-12">
+            <style>
+                .form-div{display:inline-block; min-width:400px;margin-bottom:15px;}
+                .form-div label{width:100px;}
+            </style>
+            <form class="form-inline" role="form" action = "" method = "GET">
+                <div class="form-div">
+                    <label>书籍编号：</label>
+                    <input type="text" name="id" value=""/>
+                </div>
+                <div class="form-div" >
+                    <label>书名：</label>
+                    <input type="text"  name="title" value=""/>
+                </div>
+                <br/>
+                <div class="form-div" >
+                    <label>类型：</label>
+                    <select name="type">
+                        <option value="0" selected>全部</option>
+                        <option value="1" >书籍</option>
+                        <option value="2" >期刊</option>
+                        <option value="3" >课件资料</option>
+                    </select>
+                </div>
+                <br/>
+                <div class="form-div" >
+                    <label>书籍分类：</label>
+                    <select name="category">
+                        <option value="0" selected>全部</option>
+                        <option value="婚姻家庭" >婚姻家庭</option>
+                        <option value="少儿读物" >少儿读物</option>
+                        <option value="灵命成长" >灵命成长</option>
+                        <option value="神学" >神学</option>
+                        <option value="传记/见证" >传记/见证</option>
+                        <option value="工作职场" >工作职场</option>
+                        <option value="文学作品" >文学作品</option>
+                        <option value="其他" >其他</option>
+                    </select>
+                </div>
+                <br>
+                <div class="form-div" >
+                    <label>状态：</label>
+                    <input type="radio"  name="status" value="" checked/> 全部
+                    <input type="radio"  name="status" value="1" /> 上架
+                    <input type="radio"  name="status" value="2" /> 下架
+                    <input type="radio"  name="status" value="3" /> 已借出
+                </div>
+                <br/>
+                <button type="submit" class="btn btn-default">搜索</button>
+                <br/><br/>
+            </form>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="app-panel-title" >书籍列表</span>
+                    <div style="clear:both;"></div>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered table-striped">
+                        <tr><td>书籍编号</td><td>类型</td><td>书名</td><td>书籍分类</td><td>作者</td><td>出版社</td><td>版本</td></tr>
+                        <?php foreach($show_list as $val){ ?>
+                        <tr>
+                            <td><?php echo $val['id'];?></td>
+                            <td><?php echo $val['type'];?></td>
+                            <td><?php echo $val['title'];?></td>
+                            <td><?php echo $val['category'];?></td>
+                            <td><?php echo $val['author'];?></td>
+                            <td><?php echo $val['id'];?></td>
+                            <td><?php echo $val['version'];?></td>
+                        </tr>
+                        <?php } ?>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <p class="text-center text-muted copyright"> 安徽同行者教育咨询有限公司</p>
+    </div>
+</div>
+</body>
+</html>

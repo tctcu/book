@@ -8,7 +8,7 @@
 <!-- 可选的Bootstrap主题文件（一般不用引入） -->
 <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="/css/base.css">
-<link href="/css/docs.css" rel="stylesheet">
+<link rel="stylesheet" href="/css/docs.css">
 <?php if(isset($this->layout['css_block'])){ ?>
 	<?php if(is_array($this->layout['css_block'])){ ?>
 		<?php foreach ($this->layout['css_block'] as $css){ ?>
@@ -72,19 +72,19 @@
 	</nav>
 </div>
 <div class="container content">
-	<?php if(isset($this->layout['flush_message']) && !empty($this->layout['flush_message'])):?>
+	<?php if(isset($this->layout['flush_message']) && !empty($this->layout['flush_message'])){ ?>
 	<div id="alert-message" class="alert alert-danger">
 	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 		<?php echo htmlspecialchars($this->layout['flush_message'])?>
 	</div>
-	<?php endif;?>
+	<?php } ?>
 	<?php echo $this->content;?>
 </div>
 <div class="container">
 	<div class="row">
 		<p class="text-center text-muted copyright"> 安徽同行者教育咨询有限公司</p>
 	</div>
-<div>
+</div>
 <script type="text/javascript">
 	$( document ).ready(function() {
 		//flash message alert
