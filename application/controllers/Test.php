@@ -19,6 +19,15 @@ class TestController extends Yaf_Controller_Abstract
         }
     }
 
+    function mailAction(){
+        $mail = new SendMail();
+        $to = "xm0563@qq.com";
+        $subject = "Test mail";
+        $message = "Hello! This is a simple email message.";
+         var_dump( $mail->send($to,$subject,$message));
+        echo "Mail Sent.";die;
+    }
+
 
     private function log($content='') {
         $fp = fopen('/tmp/test_book.log','a');
