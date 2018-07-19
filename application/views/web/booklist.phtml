@@ -26,47 +26,42 @@
                 .form-div{display:inline-block; min-width:400px;margin-bottom:15px;}
                 .form-div label{width:100px;}
             </style>
-            <form class="form-inline" role="form" action = "" method = "GET">
+            <form class="form-inline" role="form" action = "" method = "POST">
                 <div class="form-div">
                     <label>书籍编号：</label>
-                    <input type="text" name="id" value=""/>
+                    <input type="text" name="id" value="<?php if(!empty($params['id'])){ echo $params['id']; } ?>"/>
                 </div>
                 <div class="form-div" >
                     <label>书名：</label>
-                    <input type="text"  name="title" value=""/>
+                    <input type="text"  name="title" value="<?php if(!empty($params['title'])){ echo $params['title']; } ?>"/>
                 </div>
                 <br/>
                 <div class="form-div" >
                     <label>类型：</label>
                     <select name="type">
-                        <option value="0" selected>全部</option>
-                        <option value="1" >书籍</option>
-                        <option value="2" >期刊</option>
-                        <option value="3" >课件资料</option>
+                        <option value="0" <?php if(!isset($params['type']) || $params['type'] == '0' ){ echo "selected"; } ?>><?php echo '全部';?></option>
+                        <?php foreach($type as $k=>$v){ ?>
+                            <option value="<?php echo $k;?>" <?php if(isset($params['type']) && $params['type'] == $k ){ echo "selected"; } ?>><?php echo $v;?></option>
+                        <?php } ?>
                     </select>
                 </div>
                 <br/>
                 <div class="form-div" >
                     <label>书籍分类：</label>
                     <select name="category">
-                        <option value="0" selected>全部</option>
-                        <option value="婚姻家庭" >婚姻家庭</option>
-                        <option value="少儿读物" >少儿读物</option>
-                        <option value="灵命成长" >灵命成长</option>
-                        <option value="神学" >神学</option>
-                        <option value="传记/见证" >传记/见证</option>
-                        <option value="工作职场" >工作职场</option>
-                        <option value="文学作品" >文学作品</option>
-                        <option value="其他" >其他</option>
+                        <option value="0" <?php if(!isset($params['category']) || $params['category'] == '' ){ echo "selected"; } ?>><?php echo '全部';?></option>
+                        <?php foreach($category as $v){ ?>
+                            <option value="<?php echo $v;?>" <?php if(isset($params['category']) && $params['category'] == $v ){ echo "selected"; } ?>><?php echo $v;?></option>
+                        <?php } ?>
                     </select>
                 </div>
                 <br>
                 <div class="form-div" >
                     <label>状态：</label>
-                    <input type="radio"  name="status" value="" checked/> 全部
-                    <input type="radio"  name="status" value="1" /> 上架
-                    <input type="radio"  name="status" value="2" /> 下架
-                    <input type="radio"  name="status" value="3" /> 已借出
+                    <input type="radio"  name="status" value="" <?php if(empty($params['status'])){ echo 'checked';} ?>/> 全部
+                    <input type="radio"  name="status" value="1" <?php if(!empty($params['status']) && $params['status']=='1'){ echo 'checked'; } ?>/> 可借阅
+                    <input type="radio"  name="status" value="2" <?php if(!empty($params['status']) && $params['status']=='2'){ echo 'checked'; } ?>/> 已下架
+                    <input type="radio"  name="status" value="3" <?php if(!empty($params['status']) && $params['status']=='3'){ echo 'checked'; } ?>/> 已借出
                 </div>
                 <br/>
                 <button type="submit" class="btn btn-default">搜索</button>
@@ -79,16 +74,17 @@
                 </div>
                 <div class="panel-body">
                     <table class="table table-bordered table-striped">
-                        <tr><td>书籍编号</td><td>类型</td><td>书名</td><td>书籍分类</td><td>作者</td><td>出版社</td><td>版本</td></tr>
+                        <tr><td>书籍编号</td><td>类型</td><td>书名</td><td>书籍分类</td><td>作者</td><td>出版社</td><td>版本</td><td>状态</td></tr>
                         <?php foreach($show_list as $val){ ?>
                         <tr>
                             <td><?php echo $val['id'];?></td>
-                            <td><?php echo $val['type'];?></td>
+                            <td><?php echo $type[$val['type']];?></td>
                             <td><?php echo $val['title'];?></td>
                             <td><?php echo $val['category'];?></td>
                             <td><?php echo $val['author'];?></td>
-                            <td><?php echo $val['id'];?></td>
+                            <td><?php echo $val['press'];?></td>
                             <td><?php echo $val['version'];?></td>
+                            <td><?php if($val['status']==1){echo '可借阅';}elseif($val['status']==2){echo '已下架';}else{echo '已借出';};?></td>
                         </tr>
                         <?php } ?>
                     </table>

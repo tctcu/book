@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.3">
+    <!-- 最新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/docs.css">
+
+    <link rel="shortcut icon" href="favicon.ico" />
+    <script src="/js/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.validate.min.js"></script>
+    <title>登录同行者借阅书籍</title>
+</head>
+<body>
+<div class="container content">
+    <div class="login-panel">
+        <div class="panel panel-default">
+            <div class="panel-heading">登录</div>
+            <div class="panel-body">
+                <?php if(!empty($message)){ ?>
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <?php echo htmlspecialchars($message)?>
+                    </div>
+                <?php } ?>
+                <form action="" method="post" role="form">
+                    <div class="form-group">
+                        <label for="exampleInputMobile">手机号</label>
+                        <input type="text" class="form-control" name="mobile" id="exampleInputMobile" placeholder="请输入手机号">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword">密码</label>
+                        <input type="password" class="form-control"  name="password" id="exampleInputPassword" placeholder="请输入密码">
+                    </div>
+                    <button type="submit" class="btn btn-default" >登录</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <p class="text-center text-muted copyright"> 安徽同行者教育咨询有限公司</p>
+    </div>
+</div>
+</body>
+</html>
