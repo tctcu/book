@@ -56,6 +56,11 @@
                     <input type="text" name="price"  <?php if(!empty($info)){ ?>value="<?php echo $info['price'];}?>" size="20">
                     <span class="help-block error" style="display: inline-block;"></span>
                 </div>
+                <div class="form-group">
+                    <label for="number">第几本：</label>
+                    <input type="text" name="number"  value="<?php if(!empty($info)){ echo $info['number'];}else{ echo 1;}?>" size="20">
+                    <span class="help-block error" style="display: inline-block;"></span>
+                </div>
 
                 <a href="javascript:void(0)" id="save" class="btn btn-default">提交</a>
             </form>

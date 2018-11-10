@@ -106,4 +106,18 @@ class BookModel extends MysqlModel {
         }
         return $num;
     }
+
+    #检查书本重复
+    function checkTitle($title,$number,$id = ''){
+        $sql = "select id from {$this->_name} where title='".$title."' and `number`='".$number."' ";
+        if($id){
+            $sql .= " and id <> {$id} ";
+        }
+        $sql .= " limit 1 ";
+        $result = $this->_db->fetchRow($sql);
+        if($result['id']) {
+            return $result['id'];
+        }
+        return false;
+    }
 }

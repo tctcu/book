@@ -86,6 +86,8 @@ CREATE TABLE `book` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='书籍资料表';
 
+ALTER TABLE book add `number` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '书籍编号' after `category`;
+
  CREATE TABLE `user` (
   `uid` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(12) NOT NULL COMMENT '姓名',

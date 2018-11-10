@@ -58,6 +58,7 @@ class BookController extends AdminController
 			$category = !empty($_REQUEST['category']) ? trim($_REQUEST['category']) : '';
 			$price = !empty($_REQUEST['price']) ? trim($_REQUEST['price']) : '';
 			$type = !empty($_REQUEST['type']) ? intval($_REQUEST['type']) : 1;
+			$number = !empty($_REQUEST['number']) ? trim($_REQUEST['number']) : '';
 
 			$data = array(
 				'title' => $title,
@@ -67,8 +68,15 @@ class BookController extends AdminController
 				'category' => $category,
 				'type' => $type,
 				'price' => $price,
+				'number' => $number,
 			);
-
+			#书名+第几本 重复排重
+			$book_id = $book_model->checkTitle($title,$number,$id);//$id 用与编辑 排除本次
+			if($book_id){
+				$this->set_flush_message('《'.$title.'》第'.$number.'本已存在，编号'.$book_id);
+				$this->redirect('/admin/book/create/?'.http_build_query($data));
+				return FALSE;
+			}
 			if($info['id']) {
 				$book_model->updateData($data, $info['id']);
 			} else {
@@ -82,7 +90,7 @@ class BookController extends AdminController
 
 		$this->_view->type = $book_model->type;
 		$this->_view->category = $book_model->category;
-		$this->_view->info = $info;
+		$this->_view->info = $info ? $info : $_GET;
 		$this->_layout->meta_title = '编辑/添加书籍';
 	}
 
