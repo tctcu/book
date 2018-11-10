@@ -73,8 +73,10 @@ class BookController extends AdminController
 			#书名+第几本 重复排重
 			$book_id = $book_model->checkTitle($title,$number,$id);//$id 用与编辑 排除本次
 			if($book_id){
+				$params = $data;
+				$params['id'] = $id;
 				$this->set_flush_message('《'.$title.'》第'.$number.'本已存在，编号'.$book_id);
-				$this->redirect('/admin/book/create/?'.http_build_query($data));
+				$this->redirect('/admin/book/create/?'.http_build_query($params));
 				return FALSE;
 			}
 			if($info['id']) {
